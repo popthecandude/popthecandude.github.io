@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Green Fridge Labs Games</title>
+  <meta name="description" content="Official Green Fridge Labs game page for Pop The Can, DeepCorp Rescue, and Soft." />
+  <meta name="theme-color" content="#ffcc00" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
+
+  <!-- Social preview -->
+  <meta property="og:title" content="Green Fridge Labs Games" />
+  <meta property="og:description" content="Official game page for Pop The Can, DeepCorp Rescue, and Soft." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon.png" />
+
+  <style>
+    :root{
+      --bg1:#ffcc00;
+      --bg2:#ff9900;
+      --card:#fff;
+      --text:#222;
+      --muted:#666;
+      --shadow:rgba(0,0,0,.18);
+      --radius:20px;
+      --shotRadius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:28px 16px;
+    }
+    .wrap{width:100%;max-width:980px}
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:0 18px 45px var(--shadow);
+      overflow:hidden;
+    }
+    header{
+      padding:28px 28px 10px;
+      text-align:center;
+    }
+    .title{
+      margin:0;
+      font-size:clamp(2rem,3vw,2.6rem);
+      line-height:1.1;
+    }
+    .subtitle{
+      margin:12px auto 0;
+      max-width:720px;
+      font-size:1.08rem;
+      line-height:1.6;
+      color:#333;
+    }
+    .top-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      padding:18px 20px 28px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 18px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:700;
+      background:#ff9900;
+      color:#fff;
+      transition:transform .15s ease, background .15s ease;
+      will-change:transform;
+    }
+    .pill:hover{background:#ff7700;transform:translateY(-2px)}
+    .play-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      background:#000;
+      color:#fff;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:700;
+      transition:transform .15s ease;
+      will-change:transform;
+    }
+    .play-badge:hover{transform:translateY(-2px)}
+    .play-badge-disabled{
+      opacity:.75;
+    }
+    .play-badge-disabled:hover{
+      transform:none;
+    }
+    .play-badge small{display:block;font-weight:600;opacity:.85}
+    .play-badge strong{display:block;font-size:1.05rem;line-height:1.1}
+    .play-icon{width:28px;height:28px;flex:0 0 28px}
+
+    section{padding:0 28px 28px}
+    .section-title{margin:0;padding-top:8px;font-size:1.35rem}
+    .section-note{margin:10px 0 0;color:var(--muted);line-height:1.6}
+    .divider{height:1px;background:#eee;margin:0}
+
+    .game-block{
+      padding-top:26px;
+    }
+    .game-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .game-title{
+      margin:0;
+      font-size:clamp(1.55rem,2.4vw,2rem);
+      line-height:1.15;
+    }
+    .game-description{
+      margin:10px 0 0;
+      color:#333;
+      line-height:1.6;
+      max-width:680px;
+    }
+    .game-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    /* Screenshot gallery */
+    .gallery{
+      margin-top:16px;
+      display:grid;
+      gap:14px;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+    }
+    .shot-link{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      border-radius:var(--shotRadius);
+      overflow:hidden;
+      border:1px solid #eee;
+      background:#fafafa;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+      transition:transform .15s ease, box-shadow .15s ease;
+      will-change:transform;
+      cursor:zoom-in;
+    }
+    .shot-link:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 35px rgba(0,0,0,.16);
+    }
+    .shot{
+      width:100%;
+      /* Consistent height across all screenshots */
+      aspect-ratio: 9 / 20; /* works great with 720x1603-ish screens */
+      background:#f3f3f3;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .shot img{
+      width:100%;
+      height:100%;
+      object-fit:cover; /* keeps same tile height, crops a little if needed */
+      display:block;
+    }
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    /* Click-to-enlarge modal */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      z-index:9999;
+    }
+    .lightbox[aria-hidden="false"]{display:flex;}
+    .lightbox-inner{
+      max-width:min(1000px, 96vw);
+      max-height:92vh;
+      width:auto;
+      position:relative;
+    }
+    .lightbox img{
+      max-width:100%;
+      max-height:92vh;
+      border-radius:18px;
+      display:block;
+      box-shadow:0 22px 60px rgba(0,0,0,.45);
+    }
+    .close-btn{
+      position:absolute;
+      top:-14px;
+      right:-14px;
+      width:44px;
+      height:44px;
+      border:none;
+      border-radius:999px;
+      background:#fff;
+      color:#111;
+      font-size:22px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 10px 25px rgba(0,0,0,.35);
+    }
+    .close-btn:active{transform:scale(.98)}
+    .kbd{
+      margin-top:10px;
+      text-align:center;
+      color:rgba(255,255,255,.8);
+      font-size:.95rem;
+    }
+
+    footer{
+      padding:18px 28px 24px;
+      color:var(--muted);
+      font-size:.92rem;
+      text-align:center;
+    }
+    code{
+      background:#f3f3f3;
+      padding:3px 8px;
+      border-radius:7px;
+      font-size:.9em;
+      color:#222;
+    }
+
+    @media (max-width: 860px){
+      .gallery{grid-template-columns:repeat(2, minmax(0, 1fr));}
+      .game-actions{justify-content:flex-start;}
+    }
+    @media (max-width: 520px){
+      header{padding:22px 18px 8px;}
+      section{padding:0 18px 22px;}
+      footer{padding:16px 18px 20px;}
+      .gallery{grid-template-columns:1fr;}
+      .close-btn{top:-10px;right:-10px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <h1 class="title">🎮 Green Fridge Labs Games</h1>
+        <p class="subtitle">
+          Welcome! This page is used for Google Play / AdMob compliance.
+        </p>
+      </header>
+
+      <div class="top-actions">
+        <a class="pill" href="./privacy_policy.txt">Pop The Can Privacy Policy</a>
+        <a class="pill" href="./privacy_policy_deepcorp.txt">DeepCorp Rescue Privacy Policy</a>
+        <a class="pill" href="./privacy_policy_soft.txt">Soft Privacy Policy</a>
+        <a class="pill" href="./app-ads.txt">app-ads.txt</a>
+      </div>
+
+      <hr class="divider" />
+
+      <section class="game-block" id="deepcorp-rescue">
+        <div class="game-head">
+          <div>
+            <h2 class="game-title">🚀 DeepCorp Rescue</h2>
+            <p class="game-description">
+              Rescue survivors, recover valuables, and complete dangerous missions deep underground.
+            </p>
+          </div>
+
+          <div class="game-actions">
+            <a class="pill" href="./privacy_policy_deepcorp.txt">Privacy Policy</a>
+            <!-- Replace this href with the real DeepCorp Rescue Google Play URL later -->
+            <a class="play-badge"
+               href="https://play.google.com/store/apps/details?id=com.green_fridge.deepcorp"
+               title="DeepCorp Rescue Google Play link coming soon">
+              <svg class="play-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M10 8v48l44-24L10 8z" fill="#00d2ff"></path>
+                <path d="M10 8l28 28L10 36V8z" fill="#00ff7b" opacity="0.85"></path>
+                <path d="M10 36l28 0L10 56V36z" fill="#ffd400" opacity="0.9"></path>
+                <path d="M38 36l16-4-16-4v8z" fill="#ff4b4b" opacity="0.9"></path>
+              </svg>
+              <span>
+                <small>Get it on</small>
+                <strong>Google Play</strong>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <a class="shot-link" href="screenshot4.png" data-full="screenshot4.png" aria-label="Open DeepCorp Rescue screenshot 1">
+            <div class="shot"><img src="screenshot4.png" alt="DeepCorp Rescue gameplay screenshot 1" /></div>
+          </a>
+
+          <a class="shot-link" href="screenshot5.png" data-full="screenshot5.png" aria-label="Open DeepCorp Rescue screenshot 2">
+            <div class="shot"><img src="screenshot5.png" alt="DeepCorp Rescue gameplay screenshot 2" /></div>
+          </a>
+
+          <a class="shot-link" href="screenshot6.png" data-full="screenshot6.png" aria-label="Open DeepCorp Rescue screenshot 3">
+            <div class="shot"><img src="screenshot6.png" alt="DeepCorp Rescue gameplay screenshot 3" /></div>
+          </a>
+        </div>
+
+        <div class="hint">Tip: Click a screenshot to view it larger.</div>
+      </section>
+
+
+      <hr class="divider" />
+
+      <section class="game-block" id="pop-the-can">
+        <div class="game-head">
+          <div>
+            <h2 class="game-title">🎯 Pop The Can</h2>
+            <p class="game-description">
+              Fun Android arcade game. Pop the cans and beat your high score!
+            </p>
+          </div>
+
+          <div class="game-actions">
+            <a class="pill" href="./privacy_policy.txt">Privacy Policy</a>
+            <a class="play-badge"
+               href="https://play.google.com/store/apps/details?id=com.Green_Fridge.PopGame"
+               target="_blank" rel="noopener">
+              <svg class="play-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M10 8v48l44-24L10 8z" fill="#00d2ff"></path>
+                <path d="M10 8l28 28L10 36V8z" fill="#00ff7b" opacity="0.85"></path>
+                <path d="M10 36l28 0L10 56V36z" fill="#ffd400" opacity="0.9"></path>
+                <path d="M38 36l16-4-16-4v8z" fill="#ff4b4b" opacity="0.9"></path>
+              </svg>
+              <span>
+                <small>Get it on</small>
+                <strong>Google Play</strong>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <a class="shot-link" href="screenshot1.png" data-full="screenshot1.png" aria-label="Open Pop The Can screenshot 1">
+            <div class="shot"><img src="screenshot1.png" alt="Pop The Can gameplay screenshot 1" /></div>
+          </a>
+
+          <a class="shot-link" href="screenshot2.png" data-full="screenshot2.png" aria-label="Open Pop The Can screenshot 2">
+            <div class="shot"><img src="screenshot2.png" alt="Pop The Can gameplay screenshot 2" /></div>
+          </a>
+
+          <a class="shot-link" href="screenshot3.png" data-full="screenshot3.png" aria-label="Open Pop The Can screenshot 3">
+            <div class="shot"><img src="screenshot3.png" alt="Pop The Can gameplay screenshot 3" /></div>
+          </a>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="game-block" id="soft">
+        <div class="game-head">
+          <div>
+            <h2 class="game-title">🎵 Soft</h2>
+            <p class="game-description">
+              A calm and relaxing Android app with free music made to help you slow down, relax, and unwind.
+            </p>
+          </div>
+
+          <div class="game-actions">
+            <a class="pill" href="./privacy_policy_soft.txt">Privacy Policy</a>
+            <a class="play-badge"
+               href="https://play.google.com/store/apps/details?id=com.Green_Fridge.Soft"
+               target="_blank" rel="noopener">
+              <svg class="play-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M10 8v48l44-24L10 8z" fill="#00d2ff"></path>
+                <path d="M10 8l28 28L10 36V8z" fill="#00ff7b" opacity="0.85"></path>
+                <path d="M10 36l28 0L10 56V36z" fill="#ffd400" opacity="0.9"></path>
+                <path d="M38 36l16-4-16-4v8z" fill="#ff4b4b" opacity="0.9"></path>
+              </svg>
+              <span>
+                <small>Get it on</small>
+                <strong>Google Play</strong>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <a class="shot-link" href="screenshot7.png" data-full="screenshot7.png" aria-label="Open Soft screenshot 1">
+            <div class="shot"><img src="screenshot7.png" alt="Soft relaxing music app screenshot 1" /></div>
+          </a>
+
+          <a class="shot-link" href="screenshot8.png" data-full="screenshot8.png" aria-label="Open Soft screenshot 2">
+            <div class="shot"><img src="screenshot8.png" alt="Soft relaxing music app screenshot 2" /></div>
+          </a>
+
+          <a class="shot-link" href="screenshot9.png" data-full="screenshot9.png" aria-label="Open Soft screenshot 3">
+            <div class="shot"><img src="screenshot9.png" alt="Soft relaxing music app screenshot 3" /></div>
+          </a>
+        </div>
+
+        <div class="hint">Tip: Click a screenshot to view it larger.</div>
+      </section>
+
+      <hr class="divider" />
+
+      <footer>
+        <a href="https://www.youtube.com/@GreenFridgeLabs" target="_blank" rel="noopener" style="text-decoration: none; color: #000; display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
+          <svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" style="color: #f00;">
+            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/>
+          </svg>
+          GreenFridgeLabs
+        </a>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+      <button class="close-btn" id="closeBtn" aria-label="Close">×</button>
+      <img id="lightboxImg" src="" alt="Screenshot enlarged" />
+      <div class="kbd">Click outside the image or press <strong>Esc</strong> to close.</div>
+    </div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const closeBtn = document.getElementById("closeBtn");
+    const shotLinks = document.querySelectorAll(".shot-link");
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+      document.body.style.overflow = "";
+    }
+
+    shotLinks.forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        openLightbox(a.dataset.full || a.getAttribute("href"));
+      });
+    });
+
+    closeBtn.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (e) => {
+      // Close when clicking the dark background (outside the modal content)
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.getAttribute("aria-hidden") === "false") {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
