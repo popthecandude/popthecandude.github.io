@@ -1,0 +1,50 @@
+Privacy Policy — Soft
+Introduction
+This Privacy Policy explains what information is collected by Soft, how it is used, and what choices you have.
+Soft is provided as a free app and is intended for use as is.
+
+By using Soft, you agree to the collection and use of information in accordance with this Privacy Policy. The Personal Information we collect is used only to provide and improve the app. We will not use or share your information with anyone except as described here.
+
+Information collection and use
+For a better experience, Soft may request certain personally identifiable information, such as your name, email address, and basic usage data. Any information requested will be retained and used as described in this Privacy Policy.
+
+The app may use third‑party services that collect information used to identify you (for example, analytics or crash reporting services).
+
+Log data
+When you use Soft, we may collect log data such as your device’s Internet Protocol (IP) address, device name, operating system version, app configuration, time and date of use, and other statistics. This information is used to improve the app and diagnose issues.
+
+Cookies
+Soft itself does not intentionally use cookies. However, third‑party code and libraries integrated into the app may use cookies to collect information and improve their services.
+You can choose to accept or refuse cookies through your device or browser settings. Some features may not function properly if cookies are disabled.
+
+Location information
+If Soft uses location‑based features, your approximate or precise location may be processed to provide those features. Location data is only used within the scope necessary for the relevant functionality and is not stored longer than needed.
+
+Device information
+We may collect non‑personal device information (such as device model, operating system version, language, and anonymous identifiers) to improve performance, compatibility, and security. This information does not directly identify you.
+
+Service providers
+We may employ third‑party companies and individuals to:
+
+Provide or maintain the app
+
+Perform app‑related services
+
+Assist in analyzing how Soft is used
+
+These third parties may have access to your Personal Information only to perform tasks on our behalf and are obligated not to disclose or use it for any other purpose.
+
+Security
+We value your trust in providing Personal Information and use commercially acceptable means to protect it. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+
+Children’s privacy
+Soft is not directed to children under the age of 13. We do not knowingly collect personally identifiable information from children under 13. If we discover that a child under 13 has provided Personal Information, we will delete it as soon as possible.
+If you are a parent or guardian and believe your child has provided Personal Information, please contact us so we can take appropriate action.
+
+Changes to this Privacy Policy
+We may update this Privacy Policy from time to time. You are advised to review this page periodically for any changes. Changes are effective immediately after they are posted.
+
+Contact us
+If you have any questions or suggestions about this Privacy Policy, please contact us at:
+
+Email: kantklipp@gmail.com
